@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <title>After School Club</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h1>After School Club</h1>
+            <div class="lessons">
+                <div class="lesson" v-for="lesson in lessons" :key="lesson.id">
+                    <i :class="lesson.icon"></i>
+                    <h2>{{lesson.subject}}</h2>
+                    <p>Location: {{lesson.location}}</p>
+                    <p>Price: AED {{lesson.price}}</p>
+                    <p>Spaces: {{lesson.spaces}}</p>
+                </div>
+            </div>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
