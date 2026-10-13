@@ -6,13 +6,29 @@
         <title>After School Club</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="style.css">
-        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@3.4.38/dist/vue.global.prod.js"></script>
     </head>
     <body>
         <div id="app">
             <h1>After School Club</h1>
+            <div class="controls">
+                <label>Sort by:
+                    <select v-model="sortBy">
+                        <option value="subject">Subject</option>
+                        <option value="location">Location</option>
+                        <option value="price">Price</option>
+                        <option value="spaces">Spaces</option>
+                    </select>
+                </label>
+                <label>Order:
+                    <select v-model="sortOrder">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>                
+                </label>
+            </div>
             <div class="lessons">
-                <div class="lesson" v-for="lesson in lessons" :key="lesson.id">
+                <div class="lesson" v-for="lesson in sortLessons" :key="lesson.id">
                     <i :class="lesson.icon"></i>
                     <h2>{{lesson.subject}}</h2>
                     <p>Location: {{lesson.location}}</p>

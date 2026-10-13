@@ -3,3 +3,4 @@ h1 {text-align: center;}
 .lessons {display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;}
 .lesson {background: white; padding: 16px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0,15);}
 .lesson i{ font-size: 32px; color: #2c5282;}
+.controls { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;}

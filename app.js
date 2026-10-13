@@ -14,7 +14,22 @@ createApp({
                 {id: 8, subject:'Swimming', location:'Palm Jumeirah', price: 110, spaces: 5, icon:'fa-solid fa-person-swimming'},
                 {id: 9, subject:'Chess', location:'Deira', price: 50, spaces: 5, icon:'fa-solid fa-chess'},
                 {id: 10, subject:'Drama', location:'Mirdif', price: 85, spaces: 5, icon:'fa-solid fa-masks-theater'}
+
+                sortBy: 'subject',
+                sortOrder:'asc',
             ]
         };
+    }
+    computed: {
+        sortedLessons() {
+            const key = this.sortBy;
+            const dir = this.sortOrder === 'asc' ? 1: -1;
+            return [...this.lessons].sort((a,b) => {
+                if (typeof a[key] === 'number') {
+                    return (a[key] - b[key]) * dir;
+                }
+                return a[key].localeCompare(b[key]) * dir;
+            });
+        }
     }
 }).mount('#app');
