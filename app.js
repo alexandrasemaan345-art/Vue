@@ -15,11 +15,11 @@ createApp({
                 {id: 9, subject:'Chess', location:'Deira', price: 50, spaces: 5, icon:'fa-solid fa-chess'},
                 {id: 10, subject:'Drama', location:'Mirdif', price: 85, spaces: 5, icon:'fa-solid fa-masks-theater'}
 
+                ],
                 sortBy: 'subject',
-                sortOrder:'asc',
-            ]
+                sortOrder:'asc'
         };
-    }
+    },
     computed: {
         sortedLessons() {
             const key = this.sortBy;

@@ -27,8 +27,9 @@
                     </select>                
                 </label>
             </div>
+            
             <div class="lessons">
-                <div class="lesson" v-for="lesson in sortLessons" :key="lesson.id">
+                <div class="lesson" v-for="lesson in sortedLessons" :key="lesson.id">
                     <i :class="lesson.icon"></i>
                     <h2>{{lesson.subject}}</h2>
                     <p>Location: {{lesson.location}}</p>
