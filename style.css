@@ -4,3 +4,8 @@ h1 {text-align: center;}
 .lessons {display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;}
 .lesson {background: white; padding: 16px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0,15);}
 .lesson i{font-size: 32px; color: #2c5282;}
+button {padding: 8px 14px; border: none; border-radius: 6px; background: #2c5282; color: white; cursor: pointer;}
+button:disabled {background:#aaa; cursor: not-allowed;}
+.topbar {text-align: right; margin-bottom: 16px;}
+.cart {max-width: 600px; margin: 0 auto;}
+.cart-item {display: flex; justify-content: space-between; align-items: white; padding: 12px; border-radius: 8px; margin-bottom: 8px;}

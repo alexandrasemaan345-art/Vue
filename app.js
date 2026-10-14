@@ -17,7 +17,9 @@ createApp({
 
                 ],
                 sortBy: 'subject',
-                sortOrder:'asc'
+                sortOrder:'asc',
+                cart:[],
+                showCart: false
         };
     },
     computed: {
@@ -30,6 +32,26 @@ createApp({
                 }
                 return a[key].localeCompare(b[key]) * dir;
             });
+        }
+    },
+    methods: {
+        addToCart(lesson) {
+            if (lesson.spaces > 0) {
+                lesson.spaces--;
+                this.cart.push(lesson.id);
+            }
+        },
+        removeFromCart(index) {
+            const lessonId = this.cart[index];
+            const lesson = this.lessons.find(l => l.id === lessonId);
+            lesson.spaces++;
+            this.cart.splice(index, 1);
+        },
+        toggleCart() {
+            this.showCart = !this.showCart;
+        },
+        getLesson(id) {
+            return this.lessons.find(l => l.id === id);
         }
     }
 }).mount('#app');
