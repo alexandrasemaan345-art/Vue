@@ -12,7 +12,7 @@
         <div id="app">
             <h1>After School Club</h1>
             <div class="topbar">
-                <button @click="toggleCart" :disabled="cart.length === 0">
+                <button @click="toggleCart" :disabled="cart.length === 0 && !showCart">
                     <i class="fa-solid fa-cart-shopping"></i>
                     {{ showCart ? 'Back to lessons' : 'Cart(' + cart.length + ')'}}
                 </button>
@@ -49,9 +49,24 @@
         </div>
         <div v-else class="cart">
             <h2>Your Cart</h2>
+            <p v-if="cart.length === 0 && !orderMessage">Your cart is empty.</p>
             <div class="cart-item" v-for="(id, index) in cart" :key="index">
                 <span>{{ getLesson(id).subject }} - {{ getLesson(id).location }} (AED {{ getLesson(id).price }})</span>
                 <button @click="removeFromCart(index)">Remove</button>
+            </div>
+
+            <div class="checkout">
+                <h2>Checkout</h2>
+                <label>Name:
+                    <input type="text" v-model="name" placeholder="Letters only">
+                </label>
+                <p class="error" v-if="name && !isNameValid">Name must contain letters only.</p>
+                <label>Phone:
+                    <input type="text" v-model="phone" placeholder="Numbers only">
+                </label>
+                <p class="error" v-if="phone && !isPhoneValid">Phone must contain numbers only.</p>
+                <button @click="checkout" :disabled="!canCheckout">Checkout</button>
+                <p class="success" v-if="orderMessage">{{ orderMessage }}</p>
             </div>
         </div>
     </div>

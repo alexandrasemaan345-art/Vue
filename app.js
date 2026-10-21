@@ -19,7 +19,10 @@ createApp({
                 sortBy: 'subject',
                 sortOrder:'asc',
                 cart:[],
-                showCart: false
+                showCart: false,
+                name: '',
+                phone: '',
+                orderMessage: ''
         };
     },
     computed: {
@@ -32,6 +35,15 @@ createApp({
                 }
                 return a[key].localeCompare(b[key]) * dir;
             });
+        },
+        isNameValid(){
+            return /^[A-Za-z ]+$/.test(this.name.trim());
+        },
+        isPhoneValid(){
+            return /^[0-9]+$/.test(this.phone);
+        },
+        canCheckout(){
+            return this.isNameValid && this.isPhoneValid && this.cart.length > 0;
         }
     },
     methods: {
@@ -49,6 +61,18 @@ createApp({
         },
         toggleCart() {
             this.showCart = !this.showCart;
+            if (!this.showCart){
+                this.orderMessage = '';
+            }
+        },
+        checkout() {
+            if (!this.canCheckout) {
+                return;
+            }
+            this.orderMessage = 'Thank you, ' + this.name.trim() + '! Your order has been submitted.';
+            this.cart =[];
+            this.name = '';
+            this.phone = '';
         },
         getLesson(id) {
             return this.lessons.find(l => l.id === id);

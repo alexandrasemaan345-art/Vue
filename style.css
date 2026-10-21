@@ -9,3 +9,8 @@ button:disabled {background:#aaa; cursor: not-allowed;}
 .topbar {text-align: right; margin-bottom: 16px;}
 .cart {max-width: 600px; margin: 0 auto;}
 .cart-item {display: flex; justify-content: space-between; align-items: white; padding: 12px; border-radius: 8px; margin-bottom: 8px;}
+.checkout { background: white; padding: 16px; border-radius: 8px; margin-top: 20px;}
+.checkout label { display: block; margin-bottom: 8px;}
+.checkout input { padding: 6px; margin-left: 8px;}
+.error { color: #c53030; margin: 4px 0 8px;}
+.success { color: #276749; font-weight: bold; margin-top: 12px;}
