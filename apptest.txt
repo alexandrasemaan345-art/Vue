@@ -1,0 +1,118 @@
+const {createApp} = Vue;
+
+const API_URL = 'https://as4022_db_user-afterschool.onrender.com';
+
+createApp({
+    data(){
+        return{
+            lessons: [],
+            sortBy: 'subject',
+            sortOrder: 'asc',
+            cart:[],
+            showCart: false,
+            name:'',
+            phone:'',
+            orderMessage:''
+        };
+    },
+   mounted() {
+    // FETCH A: GET all lessons from backend 
+    fetch(`${API_URL}/lessons`)
+        .then(response => response.json())
+        .then(data => {
+            this.lessons = data.map(lesson => ({
+                ...lesson,
+                id: lesson._id
+            }));
+        })
+        .catch(error => console.error("Error fetching lessons:", error));
+    },
+  computed: {
+    sortedLessons() {
+        const key = this.sortBy;
+        const dir = this.sortOrder === 'asc' ? 1 : -1;
+        return [...this.lessons].sort((a, b) => {
+            if (typeof a[key] === 'number') {
+                return (a[key] - b[key]) * dir;
+            }
+            return a[key].localeCompare(b[key]) * dir;
+        });
+    },
+    isNameValid(){
+        return /^[A-Za-z ]+$/.test(this.name.trim());
+    },
+    isPhoneValid(){
+        return /^[0-9]+$/.test(this.phone);
+    },
+    canCheckout(){
+        return this.isNameValid && this.isPhoneValid && this.cart.length > 0;
+    }
+},
+methods: {
+    addToCart(lesson) {
+        if (lesson.spaces > 0) {
+            lesson.spaces--;
+            this.cart.push(lesson.id);
+        }
+    },
+    removeFromCart(index) {
+        const lessonId = this.cart[index];
+        const lesson = this.lessons.find(l => l.id === lessonId);
+        lesson.spaces++;
+        this.cart.splice(index, 1);
+    },
+    toggleCart(){
+        this.showCart = !this.showCart;
+        if (!this.showCart){
+            this.orderMessage='';
+        }
+    },
+    checkout(){
+        if(!this.canCheckout) return;
+
+        // Prepare data for the backend
+        const orderData = {
+            name: this.name.trim(),
+            phone: this.phone,
+            lessonIds: this.cart,
+            spaces: this.cart.length
+        };
+
+        //FETCH B: POST the order to the backend
+        fetch(`${API_URL}/orders`,{
+          method:'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(orderData)  
+        })
+        .then(response => {
+            if(!reponse.ok) throw new Error("Order failed");
+            return response.json();
+        })
+        .then(() => {
+            // FETCH C: PUT update spaces for each lesson in the cart
+            this.cart.forEach(lessonId =>{
+                const lesson = this.lessons.find(l => l.id === lessonId);
+                if (lesson) {
+                    fetch(`${API_URL}/lesson/${lessonId}`,{
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json'},
+                        body: JSON.stringify({ spaces: lesson.spaces})
+                    }).catch(err => console.error("Error updating space:", err));
+                }
+            });
+            this.orderMessage = 'Thank you,' + this.name + '!Your order has been submitted';
+            this.cart =[];
+            this.name ='';
+            this.phone = '';
+        })
+        .catch(error => {
+            console.error("Error submitting order:", error);
+            alert("There was an error submitting your order.");
+        });
+    },
+    getLesson(id){
+        return this.lessons.find(l => l.id === id);
+    }
+}
+}).mount('#app');
+    

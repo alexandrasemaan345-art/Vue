@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>After School Club</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppings:wgth@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="style.css">
-        <script src="https://cdn.jsdelivr.net/npm/vue@3.4.38/dist/vue.global.js"></script>
     </head>
     <body>
         <div id="app">
@@ -35,7 +35,21 @@
                         </select>
                     </label>
                 </div>
-            
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <label>Filter by Teacher:
+                        <select v-model="selectedTeacherId" @change="filterByTeacher">
+                            <option value="">All Teachers</option>
+                            <option v-for="teacher in teachers" :key="teacher._id" :value="teacher._id">
+                                {{ teacher.firstName }} {{ teacher.lastName }}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <input type="text" v-model="searchQuery" @input="searchLessons" placeholder="Search lessons by subject, location, etc" style="padding: 8px; width: 300px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                
             <div class="lessons">
                 <div class="lesson" v-for="lesson in sortedLessons" :key="lesson.id">
                     <i :class="lesson.icon"></i>
@@ -50,27 +64,38 @@
         <div v-else class="cart">
             <h2>Your Cart</h2>
             <p v-if="cart.length === 0 && !orderMessage">Your cart is empty.</p>
+            
             <div class="cart-item" v-for="(id, index) in cart" :key="index">
-                <span>{{ getLesson(id).subject }} - {{ getLesson(id).location }} (AED {{ getLesson(id).price }})</span>
+                <span>
+                    <i :class="getLesson(id).icon" style="margin-right: 10px; color: #2c5282;"></i>
+                    {{ getLesson(id).subject}} - {{ getLesson(id).location }} (AED {{ getLesson(id).price }})
+                </span>
                 <button @click="removeFromCart(index)">Remove</button>
             </div>
 
             <div class="checkout">
                 <h2>Checkout</h2>
+                <label>Select Date:
+                    <input type="date" v-model="bookingDate">
+                </label>
+                <p class="error" v-if="!bookingDate">Please select a date.</p>
                 <label>Name:
                     <input type="text" v-model="name" placeholder="Letters only">
                 </label>
                 <p class="error" v-if="name && !isNameValid">Name must contain letters only.</p>
+                
                 <label>Phone:
                     <input type="text" v-model="phone" placeholder="Numbers only">
                 </label>
                 <p class="error" v-if="phone && !isPhoneValid">Phone must contain numbers only.</p>
+                
                 <button @click="checkout" :disabled="!canCheckout">Checkout</button>
                 <p class="success" v-if="orderMessage">{{ orderMessage }}</p>
             </div>
         </div>
     </div>
-    
+     <script src="https://cdn.jsdelivr.net/npm/vue@3.4.38/dist/vue.global.js"></script>
+     
      <script src="app.js"></script>
     </body>
 </html>
