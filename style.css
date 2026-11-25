@@ -1,4 +1,5 @@
-body {font-family: 'Poppins', Arial, sans-serif;
+body {
+     font-family: 'Poppins', Arial, sans-serif;
      margin: 0; 
      padding: 20px;
      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
@@ -42,20 +43,16 @@ h1 {
 
 .lessons {
     display: grid; 
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 4px solid #2c5282;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 10px;
 }
 
 .lesson {
     background: white; 
     padding: 20px; 
     border-radius: 16px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -69,19 +66,35 @@ h1 {
 }
 
 .lesson i {
-    font-size: 40px;
-     color: #2c5282;
-     margin-bottom: 10px;
+    font-size: 20px;
+     color: white;
+     background-color: #2c5282;
+     padding: 12px;
+     border-radius: 50%;
+     margin-bottom: 15px;
      transition: transform 0.3s ease;
+     display: inline-flex;
+     justify-content: center;
+     align-items: center;
+     width: 44px;
+     height: 44px;
+     box-shadow: 0 4px 6px rgba(44, 82, 130, 0.2);
 }
 
 .lesson:hover i {
-    transform: scale(1.2) rotate(5deg);
+    transform: scale(1.1) rotate(-3px);
+    box-shadow: 0 6px 12px rgba(44, 82, 130, 0.3);
 }
 
 .lesson h2 {
     color: #2d3748;
     margin: 10px 0;
+    font-size: 1.4rem;
+}
+
+.lesson p {
+    color: #4a5568;
+    margin: 5px 0;
     font-size: 0.95rem;
 }
 
@@ -101,10 +114,9 @@ button {
 }
 
 button:hover:not(:disabled) {
-    background: #cbd5e0;
-    cursor: not-allowed;
+    background: #1a365d;
     transform: none;
-    box-shadow: none;
+    box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
 }
 
 button:disabled {
@@ -135,13 +147,13 @@ button:disabled {
 }
 
 .cart h2 {
-    text-align: flex;
+    text-align: center;
     color: #2d3748;
 }
 
 .cart-item {
     display: flex;
-   justify-content: space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 15px;
     border-radius: 12px;
@@ -176,7 +188,7 @@ button:disabled {
 }
 
 .checkout input {  
-    margin-left: 16px;
+    margin-left: 8px;
     width: calc(100% - 120px);
 }
 
