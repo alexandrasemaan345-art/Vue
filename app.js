@@ -2,7 +2,7 @@
 const {createApp} = Vue;
 
 // localhost for testing
-const API_URL = 'http://m00978480-afterschool.onrender.com';
+const API_URL = 'https://m00978480-afterschool.onrender.com';
 
 createApp({
     data(){
