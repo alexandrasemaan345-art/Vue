@@ -70,8 +70,17 @@
                 <span>
                     <i :class="getLesson(id).icon" style="margin-right: 10px; color: #2c5282;"></i>
                     {{ getLesson(id).subject}} - {{ getLesson(id).location }} (AED {{ getLesson(id).price }})
+
+                    <small style="color: #718096; margin-left: 10px; font-size: 0.85em;">
+                        (Spaces left: {{ getLesson(id).spaces }})
+                    </small>
                 </span>
                 <button @click="removeFromCart(index)">Remove</button>
+            </div>
+
+            <div v-if="cart.length > 0" style="text-align: right; margin-top: 20px; border-top: 2px solid #e2e8f0; padding-top: 15px;">
+                <h3 style="color: #2c5282; font-size: 1.4rem;">Grand Total: AED {{ cartTotal }}</h3>
+                
             </div>
 
             <div class="checkout">

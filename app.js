@@ -2,7 +2,7 @@
 const {createApp} = Vue;
 
 // localhost for testing
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://m00978480-afterschool.onrender.com';
 
 createApp({
     data(){
@@ -60,6 +60,12 @@ createApp({
         },
         canCheckout() {
             return this.isNameValid && this.isPhoneValid && this.cart.length > 0;
+        },
+        cartTotal() {
+            return this.cart.reduce((total, id) => {
+                const lesson = this.getLesson(id);
+                return total + (lesson ? lesson.price : 0);
+            }, 0);
         }
     },
     methods: {
